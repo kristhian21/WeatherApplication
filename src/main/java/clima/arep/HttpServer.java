@@ -52,9 +52,9 @@ public class HttpServer {
                 String apiconection = "http://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=ee1482f403f8b501850103d18417d06f";
                 URL url = new URL(apiconection);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                con.setRequestMethod("GET");
-                con.getResponseCode();
+                HttpURLConnection conexion = (HttpURLConnection) url.openConnection();
+                conexion.setRequestMethod("GET");
+                conexion.getResponseCode();
                 out.print("HTTP/1.1 200 OK\r\n Content-Type: text/json \r\n\r\n");
                 StringBuilder sb = new StringBuilder();
                 String line;
