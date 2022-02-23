@@ -49,19 +49,25 @@ public class HttpServer {
             if(req.startsWith("/consulta")){
                 ciudad = req.split("=")[1];
                 System.out.println(ciudad);
-                String apiconection = "https://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=ee1482f403f8b501850103d18417d06f";
-                URL obj = new URL(apiconection);
-                HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+                String apiconection = "http://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=ee1482f403f8b501850103d18417d06f";
+                URL url = new URL(apiconection);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 con.setRequestMethod("GET");
                 con.getResponseCode();
                 out.print("HTTP/1.1 200 OK\r\n Content-Type: text/json \r\n\r\n");
                 StringBuilder sb = new StringBuilder();
                 String line;
-                while ((line = in.readLine()) != null) {
+                while ((line = reader.readLine()) != null) {
                     sb.append(line+"\n");
                 }
                 Gson gson = new Gson();
                 outputLine = gson.toJson(sb.toString());
+                out.println(outputLine);
+                out.close();
+                in.close();
+                clientSocket.close();
+                running = false;
             }
             else if(req.startsWith("/clima")){
                 outputLine = "HTTP/1.1 200 OK\r\n"
