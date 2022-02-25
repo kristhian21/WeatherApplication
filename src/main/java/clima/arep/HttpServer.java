@@ -63,10 +63,6 @@ public class HttpServer {
                 }
                 Gson gson = new Gson();
                 outputLine = gson.toJson(sb.toString());
-                out.println(outputLine);
-                out.close();
-                in.close();
-                clientSocket.close();
                 running = false;
             }
             else if(req.startsWith("/clima")){
