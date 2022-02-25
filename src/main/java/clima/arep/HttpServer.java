@@ -3,7 +3,6 @@ package clima.arep;
 
 import java.net.*;
 import java.io.*;
-import com.google.gson.Gson;
 
 public class HttpServer {
 
@@ -61,9 +60,9 @@ public class HttpServer {
                 while ((line = reader.readLine()) != null) {
                     sb.append(line+"\n");
                 }
-                Gson gson = new Gson();
-                outputLine = gson.toJson(sb.toString());
-                running = false;
+                outputLine = "HTTP/1.1 200 OK\r\n"
+                        + "Content-Type: application/json\r\n"
+                        + "\r\n" + sb.toString();
             }
             else if(req.startsWith("/clima")){
                 outputLine = "HTTP/1.1 200 OK\r\n"
@@ -87,7 +86,11 @@ public class HttpServer {
                         + "</style>"
                         + "</head>"
                         + "<body>"
-                        + "CLIMA"
+                        + "<h1 class=\"titulo\">Consultar el clima de una ciudad</h1>"
+                        + "<form action=\"/consulta\" methord=\"get\">"
+                        + "<label style=\"color=white\" for=\"lugar\" class=\"text2\">Ingrese el nombre de la ciudad: </label><br>\n" +
+                        "                <input type=\"text\" id=\"lugar\" name=\"lugar\" value=\"\"><br><br>\n" +
+                        "                <input type=\"submit\" value=\"Submit\">"
                         + "</body>"
                         + "</html>";
             }
